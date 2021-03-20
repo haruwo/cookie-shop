@@ -11,5 +11,6 @@ yaml 形式で以下の情報が記載されています
 version: 1 # ファイルフォーマットのバージョン
 id: # order に指定する id
 pieces: 4 # 何個入りか
+price: 340 # 金額（日本円）
 description: # 説明
 ```

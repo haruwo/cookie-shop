@@ -57,4 +57,4 @@
 ### 公開メールアドレス
 phezzan.shoukai@gmail.com
 ### ホームページアドレス
-https://haruwo.github.io/cookie-shop
+https://github.com/haruwo/cookie-shop
