@@ -12,16 +12,16 @@ import (
 )
 
 type Order struct {
-	Path string
-	Version string     `json:"version" validate:required`
-	Username string    `json:"username" validate:"required"`
-	Items []*OrderItem `json:"items" validate:"required"`
+	Path     string
+	Version  string       `json:"version" validate:required`
+	Username string       `json:"username" validate:"required"`
+	Items    []*OrderItem `json:"items" validate:"required"`
 }
 
 type OrderItem struct {
-	Path string
-	ID string `json:"id" validate:"required"`
-	Amount int64 `json:"amount" validate:"required"`
+	Path   string
+	ID     string `json:"id" validate:"required"`
+	Amount int64  `json:"amount" validate:"required"`
 }
 
 func loadOrders(dir string) ([]*Order, error) {

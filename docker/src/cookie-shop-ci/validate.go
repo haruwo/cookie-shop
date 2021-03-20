@@ -10,7 +10,7 @@ import (
 
 func NewValidate() *cobra.Command {
 	return &cobra.Command{
-		Use: "validate [targetDir]",
+		Use:   "validate [targetDir]",
 		Short: "Validate files",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			targetDir, err := os.Getwd()

@@ -12,8 +12,8 @@ import (
 )
 
 type User struct {
-	Path string
-	Version string `json:"version" validate:required`
+	Path     string
+	Version  string `json:"version" validate:required`
 	Username string `json:"username" validate:"required"`
 }
 
@@ -59,4 +59,3 @@ func usersAsMap(users []*User) map[string]*User {
 	}
 	return m
 }
-

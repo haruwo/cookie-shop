@@ -5,11 +5,9 @@ import (
 )
 
 func main() {
-	rootCmd := &cobra.Command{
-	}
+	rootCmd := &cobra.Command{}
 
 	rootCmd.AddCommand(NewValidate())
 
 	rootCmd.Execute()
 }
-

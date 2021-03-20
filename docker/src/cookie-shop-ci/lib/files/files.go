@@ -7,8 +7,8 @@ import (
 )
 
 type Files struct {
-	Users []*User
-	Items []*Item
+	Users  []*User
+	Items  []*Item
 	Orders []*Order
 }
 

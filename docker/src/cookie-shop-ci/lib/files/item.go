@@ -12,10 +12,10 @@ import (
 )
 
 type Item struct {
-	Path string
-	Version string `json:"version" validate:required`
-	ID string `json:"id" validate:"required"`
-	Price int64 `json:"price" validate:"required"`
+	Path        string
+	Version     string `json:"version" validate:required`
+	ID          string `json:"id" validate:"required"`
+	Price       int64  `json:"price" validate:"required"`
 	Description string `json:"description" validate:"required"`
 }
 
@@ -61,4 +61,3 @@ func itemsAsMap(items []*Item) map[string]*Item {
 	}
 	return m
 }
-
