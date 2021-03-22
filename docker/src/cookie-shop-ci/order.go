@@ -70,10 +70,9 @@ func newConfirmOrder() *cobra.Command {
 			log.Println("order", order)
 
 			billing.Shipping = ((items + ItemsPerCase - 1) / ItemsPerCase) * ShippingFee
-
-			total := billing.Products + billing.Shipping
-			billing.Tax = total / 10
-			billing.Total = total + billing.Tax
+			// ShippingFee は既に税込み
+			billing.Tax = billing.Products / 10
+			billing.Total = billing.Products + billing.Tax + billing.Shipping
 
 			co := OrderInfo{Billing: &billing}
 

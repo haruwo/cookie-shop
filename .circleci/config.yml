@@ -21,9 +21,36 @@ jobs:
       - run:
           name: validate
           command: bin/cookie-shop-ci validate
-
+  confirm_order:
+    executor: golang
+    steps:
+      - checkout
+      - run:
+          name: go build
+          command: |-
+            mkdir -p bin
+            cd docker/src/cookie-shop-ci
+            go build .
+            cd -
+            mv docker/src/cookie-shop-ci/cookie-shop-ci bin/
+      - run:
+          name: confirm order
+          command: |-
+            set +eo pipefail
+            orders="$(git diff --name-only main..HEAD | grep "orders/")"
+            set -eo pipefail
+            if [ -n "$orders" ]; then
+              for f in $orders; do
+                bin/cookie-shop-ci order confirm "$(basename $f)"
+              done
+            fi
 workflows:
   build:
     jobs:
       - build
-
+      - confirm_order:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: master
