@@ -1,11 +1,9 @@
 package main
 
 import (
-	"os"
+	"cookie-shop-ci/lib/files"
 
 	"github.com/spf13/cobra"
-
-	"cookie-shop-ci/lib/files"
 )
 
 func NewValidate() *cobra.Command {
@@ -13,11 +11,7 @@ func NewValidate() *cobra.Command {
 		Use:   "validate [targetDir]",
 		Short: "Validate files",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			targetDir, err := os.Getwd()
-			if err != nil {
-				return err
-			}
-
+			targetDir := "."
 			if len(args) >= 1 {
 				targetDir = args[0]
 			}

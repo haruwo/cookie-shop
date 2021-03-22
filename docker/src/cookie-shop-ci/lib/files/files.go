@@ -86,6 +86,24 @@ func (f *Files) Validate() error {
 	return nil
 }
 
+func (f *Files) FindOrder(id string) *Order {
+	for _, o := range f.Orders {
+		if path.Base(o.Path) == id {
+			return o
+		}
+	}
+	return nil
+}
+
+func (f *Files) FindItem(id string) *Item {
+	for _, i := range f.Items {
+		if i.ID == id {
+			return i
+		}
+	}
+	return nil
+}
+
 func loadUsers(dir string) ([]*User, error) {
 	var users []*User
 
