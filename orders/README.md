@@ -21,5 +21,5 @@ version: 1
 username: {GitHub username}
 items:
   - id: {id} # ex: cookie-random-4pieces
-    count: 3 # 注文個数（3 の場合、4 pieces が 3袋、合計12個のクッキーが届きます）
+    amount: 3 # 注文個数（3 の場合、4 pieces が 3袋、合計12個のクッキーが届きます）
 ```

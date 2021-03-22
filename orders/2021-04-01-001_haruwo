@@ -2,4 +2,4 @@ version: 1
 username: haruwo
 items:
   - id: cookie-random-4pieces
-    count: 3
+    amount: 3

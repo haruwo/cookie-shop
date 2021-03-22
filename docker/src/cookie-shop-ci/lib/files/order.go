@@ -8,7 +8,7 @@ type Order struct {
 	Path     string
 	Version  string       `json:"version" validate:required`
 	Username string       `json:"username" validate:"required"`
-	Items    []*OrderItem `json:"items" validate:"required"`
+	Items    []*OrderItem `json:"items" validate:"required,dive"`
 }
 
 type OrderItem struct {
