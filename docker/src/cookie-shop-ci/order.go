@@ -4,10 +4,17 @@ import (
 	"cookie-shop-ci/lib/files"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// 一箱あたりの送料
+const ShippingFee int64 = 198
+
+// 一箱あたりの最大搭載可能個数
+const ItemsPerCase int64 = 6
 
 func NewOrder() *cobra.Command {
 	order := &cobra.Command{
@@ -60,7 +67,9 @@ func newConfirmOrder() *cobra.Command {
 				items += i.Amount
 			}
 
-			billing.Shipping = ((items + 5) / 6) * 198
+			log.Println("order", order)
+
+			billing.Shipping = ((items + ItemsPerCase - 1) / ItemsPerCase) * ShippingFee
 
 			total := billing.Products + billing.Shipping
 			billing.Tax = total / 10

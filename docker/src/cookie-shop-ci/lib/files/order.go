@@ -14,7 +14,7 @@ type Order struct {
 type OrderItem struct {
 	Path   string
 	ID     string `json:"id" validate:"required"`
-	Amount int64  `json:"amount" validate:"required"`
+	Amount int64  `json:"amount" validate:"required,gte=1,lte=96"`
 }
 
 func (o *Order) Validate() error {
