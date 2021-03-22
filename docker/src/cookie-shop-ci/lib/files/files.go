@@ -2,8 +2,13 @@ package files
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"path"
+	"path/filepath"
 	"strings"
+
+	"gopkg.in/yaml.v2"
 )
 
 type Files struct {
@@ -78,5 +83,115 @@ func (f *Files) Validate() error {
 		return fmt.Errorf("found validation errors:\n" + strings.Join(msgs, "\n"))
 	}
 
+	return nil
+}
+
+func loadUsers(dir string) ([]*User, error) {
+	var users []*User
+
+	err := loadFiles(dir, loadFilesHandler{
+		EnsureCap: func(cap int) {
+			users = make([]*User, 0, cap)
+		},
+
+		LoadFile: func(f string, data []byte) error {
+			user := new(User)
+			user.Path = f
+			err := yaml.Unmarshal(data, user)
+			if err == nil {
+				users = append(users, user)
+			}
+			return err
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func loadItems(dir string) ([]*Item, error) {
+	var items []*Item
+
+	err := loadFiles(dir, loadFilesHandler{
+		EnsureCap: func(cap int) {
+			items = make([]*Item, 0, cap)
+		},
+
+		LoadFile: func(f string, data []byte) error {
+			item := new(Item)
+			item.Path = f
+			err := yaml.Unmarshal(data, item)
+			if err == nil {
+				items = append(items, item)
+			}
+			return err
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return items, nil
+}
+
+func loadOrders(dir string) ([]*Order, error) {
+	var orders []*Order
+
+	err := loadFiles(dir, loadFilesHandler{
+		EnsureCap: func(cap int) {
+			orders = make([]*Order, 0, cap)
+		},
+
+		LoadFile: func(f string, data []byte) error {
+			order := new(Order)
+			order.Path = f
+			err := yaml.Unmarshal(data, order)
+			if err == nil {
+				orders = append(orders, order)
+			}
+			return err
+		},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return orders, nil
+}
+
+type loadFilesHandler struct {
+	EnsureCap func(cap int)
+	LoadFile  func(path string, data []byte) error
+}
+
+func loadFiles(dir string, handler loadFilesHandler) error {
+	files, err := filepath.Glob(path.Join(dir, "*"))
+	if err != nil {
+		return err
+	}
+
+	handler.EnsureCap(len(files))
+
+	for _, f := range files {
+		if path.Base(f) == "README.md" || strings.HasPrefix(path.Base(f), ".") {
+			continue
+		}
+
+		log.Println("load file", f)
+
+		bytes, err := ioutil.ReadFile(f)
+		if err != nil {
+			return err
+		}
+
+		if err := handler.LoadFile(f, bytes); err != nil {
+			return err
+		}
+	}
 	return nil
 }
